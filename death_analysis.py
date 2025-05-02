@@ -8,7 +8,6 @@ motorcycle_makes = [
     "HUSQVARNA", "INDIAN", "CAN-AM", "GASGAS", "BENELLI", "BETA",
     "MV AGUSTA", "URAL"
 ]
-
 # Read the dataset
 df = pd.read_csv("accidents.csv")
 
@@ -22,8 +21,8 @@ if 'make' in df.columns:
 # Filter for fatal crashes (Crash Death Count >= 1) and valid motorcycle makes
 if 'crash death count' in df.columns and 'Vehicle Make' in df.columns:
     fatal_motorcycles_df = df[
-       # (df['crash death count'] >= 1) &
-        (df['Vehicle Make'].str.upper().isin([make.upper() for make in motorcycle_makes]))
+        #(df['crash death count'] >= 1) &   # Uncomment if filtering by crash death count
+        df['Vehicle Make'].str.upper().isin([make.upper() for make in motorcycle_makes])
     ]
 
     # Export filtered data
