@@ -1,10 +1,8 @@
-
-
 pipeline {
     agent any
 
-    tools {
-        sonarQube 'MySonarQube'
+    environment {
+        SONAR_TOKEN = credentials('sonarqubetoken')  // 'sonar-token' is the ID you gave to your SonarQube token in Jenkins credentials
     }
 
     stages {
@@ -28,8 +26,10 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('MySonarQube') {
-                    sh 'sonar-scanner'
+                script {
+                    withSonarQubeEnv('MySonarQube') { // Ensure 'MySonarQube' matches the name in your Jenkins SonarQube configuration
+                        sh "sonar-scanner -Dsonar.login=$SONAR_TOKEN"
+                    }
                 }
             }
         }
