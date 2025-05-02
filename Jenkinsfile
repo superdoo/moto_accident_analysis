@@ -47,14 +47,14 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('MySonarQube') {
-                    sh '''
-                        . venv/bin/activate
-                        sonar-scanner -Dsonar.projectKey=moto_accident_analysis \
-                                      -Dsonar.sources=. \
-                                      -Dsonar.host.url=http://localhost:8080 \
-                                      -Dsonar.login=$SONAR_TOKEN
-                    '''
+                script {
+                    withSonarQubeEnv('MySonarQube') {
+                        sh '''#!/bin/bash
+                        export PATH="/opt/sonar-scanner/bin:$PATH"
+                        source venv/bin/activate
+                        sonar-scanner -Dsonar.login=$SONAR_TOKEN
+                        '''
+                    }
                 }
             }
         }
