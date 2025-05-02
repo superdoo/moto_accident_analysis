@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/your-username/moto_accident_analysis.git'
+                git 'https://github.com/superdoo/moto_accident_analysis.git'
             }
         }
 
