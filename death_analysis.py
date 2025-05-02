@@ -13,7 +13,7 @@ motorcycle_makes = [
 df = pd.read_csv("accidents.csv")
 
 # Normalize column names to lowercase and strip spaces
-df.columns = df.columns.str.strip().str.lower()
+# df.columns = df.columns.str.strip().str.lower()
 
 # Debugging: print unique values in 'Vehicle Make' column
 print("Unique Vehicle Makes in CSV:")
