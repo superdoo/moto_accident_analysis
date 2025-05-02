@@ -45,7 +45,7 @@ pipeline {
             steps {
                 sh '''#!/bin/bash
                 source venv/bin/activate
-                python3 deahth_analysis.py
+                python3 death_analysis.py
                 '''
             }
         }
