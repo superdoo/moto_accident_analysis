@@ -1,27 +1,39 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# List of motorcycle makes to include
+motorcycle_makes = [
+    "HARLEY-DAVIDSON", "HONDA", "YAMAHA", "SUZUKI", "KAWASAKI", "DUCATI",
+    "BMW", "KTM", "TRIUMPH", "APRILIA", "MOTO GUZZI", "ROYAL ENFIELD",
+    "HUSQVARNA", "INDIAN", "CAN-AM", "GASGAS", "BENELLI", "BETA",
+    "MV AGUSTA", "URAL"
+]
+
 # Read the dataset
 df = pd.read_csv("accidents.csv")
 
-# Check the columns to make sure 'Crash Death Count' exists
-print("DataFrame columns:", df.columns)
-
-# Normalize column names to lowercase and strip spaces for consistency
+# Normalize column names to lowercase and strip spaces
 df.columns = df.columns.str.strip().str.lower()
 
-# Filter for fatal crashes where death count is >= 1
-if 'crash death count' in df.columns:
-    fatal_df = df[df['crash death count'] >= 1]
+# Normalize make column values (if it exists)
+if 'make' in df.columns:
+    df['make'] = df['make'].astype(str).str.strip().str.upper()
 
-    # Export fatal crashes to a new CSV
-    fatal_df.to_csv("death_analysis.csv", index=False)
+# Filter for fatal crashes (Crash Death Count >= 1) and valid motorcycle makes
+if 'crash death count' in df.columns and 'make' in df.columns:
+    fatal_motorcycles_df = df[
+        (df['crash death count'] >= 1) &
+        (df['make'].isin([make.upper() for make in motorcycle_makes]))
+    ]
+
+    # Export filtered data
+    fatal_motorcycles_df.to_csv("death_analysis.csv", index=False)
 
     # Generate bar chart
-    plt.figure(figsize=(6, 4))
-    plt.bar(['Fatal Crashes'], [len(fatal_df)])
-    plt.title('Motorcycle Accidents: Fatal Crashes')
+    plt.figure(figsize=(8, 4))
+    plt.bar(['Fatal Motorcycle Crashes'], [len(fatal_motorcycles_df)])
+    plt.title('Fatal Motorcycle Crashes by Selected Makes')
     plt.savefig("death_analysis.png")
     plt.show()
 else:
-    print("'Crash Death Count' column not found.")
+    print("Required columns ('Crash Death Count' and/or 'Make') not found.")
