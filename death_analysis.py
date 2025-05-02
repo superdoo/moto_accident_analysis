@@ -22,7 +22,7 @@ if 'make' in df.columns:
 # Filter for fatal crashes (Crash Death Count >= 1) and valid motorcycle makes
 if 'crash death count' in df.columns and 'Vehicle Make' in df.columns:
     fatal_motorcycles_df = df[
-        (df['crash death count'] >= 1) &
+       # (df['crash death count'] >= 1) &
         (df['Vehicle Make'].str.upper().isin([make.upper() for make in motorcycle_makes]))
     ]
 
