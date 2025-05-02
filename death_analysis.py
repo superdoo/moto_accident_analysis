@@ -15,17 +15,17 @@ df = pd.read_csv("accidents.csv")
 # Normalize column names to lowercase and strip spaces
 df.columns = df.columns.str.strip().str.lower()
 
-# Debugging: print unique values in 'vehicle make' column
+# Debugging: print unique values in 'Vehicle Make' column
 print("Unique Vehicle Makes in CSV:")
-print(df['vehicle make'].unique())  # Assuming 'vehicle make' is the correct column name after lowercase normalization
+print(df['Vehicle Make'].unique())  # Assuming 'Vehicle Make' is the correct column name after lowercase normalization
 
-# Ensure 'vehicle make' column values are properly stripped of spaces (no need for uppercase conversion)
-if 'vehicle make' in df.columns:
-    df['vehicle make'] = df['vehicle make'].astype(str).str.strip()  # Strip spaces
+# Ensure 'Vehicle Make' column values are properly stripped of spaces (no need for uppercase conversion)
+if 'Vehicle Make' in df.columns:
+    df['Vehicle Make'] = df['Vehicle Make'].astype(str).str.strip()  # Strip spaces
 
-    # Filter for valid motorcycle makes in 'vehicle make' column
+    # Filter for valid motorcycle makes in 'Vehicle Make' column
     fatal_motorcycles_df = df[
-        df['vehicle make'].isin(motorcycle_makes)  # Direct comparison since both are already uppercase
+        df['Vehicle Make'].isin(motorcycle_makes)  # Direct comparison since both are already uppercase
     ]
 
     # Export filtered data
@@ -39,4 +39,4 @@ if 'vehicle make' in df.columns:
     plt.show()
 
 else:
-    print("Required 'vehicle make' column not found.")
+    print("Required 'Vehicle Make' column not found.")
