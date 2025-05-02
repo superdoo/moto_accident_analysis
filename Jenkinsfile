@@ -8,9 +8,11 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/superdoo/moto_accident_analysis.git'
-            }
-        }
+            git branch: 'main', 
+                url: 'https://github.com/superdoo/moto_accident_analysis.git', 
+                credentialsId: 'new_github_creds'
+    }
+}
 
         stage('Install Dependencies') {
             steps {
