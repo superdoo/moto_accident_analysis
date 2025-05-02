@@ -61,7 +61,7 @@ pipeline {
 
         stage('Archive Report') {
             steps {
-                archiveArtifacts artifacts: 'reports/*.csv', onlyIfSuccessful: true
+                archiveArtifacts artifacts: '*.csv', onlyIfSuccessful: true
             }
         }
     }
