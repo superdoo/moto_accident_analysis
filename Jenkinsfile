@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         SONAR_TOKEN = credentials('sonarqubetoken')
+        PATH = "/opt/sonar-scanner/bin:$PATH"
     }
 
     stages {
@@ -38,6 +39,7 @@ pipeline {
                 script {
                     withSonarQubeEnv('MySonarQube') {
                         sh '''#!/bin/bash
+                        export PATH="/opt/sonar-scanner/bin:$PATH"
                         source venv/bin/activate
                         sonar-scanner -Dsonar.login=$SONAR_TOKEN
                         '''
