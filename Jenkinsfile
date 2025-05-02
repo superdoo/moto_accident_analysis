@@ -7,6 +7,13 @@ pipeline {
     }
 
     stages {
+
+        
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
         stage('Clone Repo') {
             steps {
                 git branch: 'main', 
@@ -38,7 +45,7 @@ pipeline {
             steps {
                 sh '''#!/bin/bash
                 source venv/bin/activate
-                python3 death_analysis.py
+                python3 deahth_analysis.py
                 '''
             }
         }
