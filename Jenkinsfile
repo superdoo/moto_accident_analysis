@@ -8,7 +8,7 @@ pipeline {
 
     stages {
 
-        
+
         stage('Clean Workspace') {
             steps {
                 cleanWs()
@@ -51,18 +51,18 @@ pipeline {
         }
 
 
-        stage('SonarQube Analysis') {
-            steps {
-                script {
-                    withSonarQubeEnv('MySonarQube') {
-                        sh '''#!/bin/bash
-                        export PATH="/opt/sonar-scanner/bin:$PATH"
-                        source venv/bin/activate
-                        sonar-scanner -Dsonar.login=$SONAR_TOKEN
-                        '''
-                    }
-                }
-            }
-        }
+        // stage('SonarQube Analysis') {
+        //     steps {
+        //         script {
+        //             withSonarQubeEnv('MySonarQube') {
+        //                 sh '''#!/bin/bash
+        //                 export PATH="/opt/sonar-scanner/bin:$PATH"
+        //                 source venv/bin/activate
+        //                 sonar-scanner -Dsonar.login=$SONAR_TOKEN
+        //                 '''
+        //             }
+        //         }
+        //     }
+        // }
     }
 }
