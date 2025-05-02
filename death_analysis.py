@@ -1,28 +1,31 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# List of motorcycle makes to include
+# List of motorcycle makes to include (already in uppercase)
 motorcycle_makes = [
     "HARLEY-DAVIDSON", "HONDA", "YAMAHA", "SUZUKI", "KAWASAKI", "DUCATI",
     "BMW", "KTM", "TRIUMPH", "APRILIA", "MOTO GUZZI", "ROYAL ENFIELD",
     "HUSQVARNA", "INDIAN", "CAN-AM", "GASGAS", "BENELLI", "BETA",
     "MV AGUSTA", "URAL"
 ]
+
 # Read the dataset
 df = pd.read_csv("accidents.csv")
 
 # Normalize column names to lowercase and strip spaces
 df.columns = df.columns.str.strip().str.lower()
 
-# Normalize make column values (if it exists)
-if 'make' in df.columns:
-    df['make'] = df['make'].astype(str).str.strip().str.upper()
+# Debugging: print unique values in 'vehicle make' column
+print("Unique Vehicle Makes in CSV:")
+print(df['vehicle make'].unique())  # Assuming 'vehicle make' is the correct column name after lowercase normalization
 
-# Filter for fatal crashes (Crash Death Count >= 1) and valid motorcycle makes
-if 'crash death count' in df.columns and 'Vehicle Make' in df.columns:
+# Ensure 'vehicle make' column values are properly stripped of spaces (no need for uppercase conversion)
+if 'vehicle make' in df.columns:
+    df['vehicle make'] = df['vehicle make'].astype(str).str.strip()  # Strip spaces
+
+    # Filter for valid motorcycle makes in 'vehicle make' column
     fatal_motorcycles_df = df[
-        #(df['crash death count'] >= 1) &   # Uncomment if filtering by crash death count
-        df['Vehicle Make'].str.upper().isin([make.upper() for make in motorcycle_makes])
+        df['vehicle make'].isin(motorcycle_makes)  # Direct comparison since both are already uppercase
     ]
 
     # Export filtered data
@@ -34,5 +37,6 @@ if 'crash death count' in df.columns and 'Vehicle Make' in df.columns:
     plt.title('Fatal Motorcycle Crashes by Selected Makes')
     plt.savefig("death_analysis.png")
     plt.show()
+
 else:
-    print("Required columns ('Crash Death Count' and/or 'Make') not found.")
+    print("Required 'vehicle make' column not found.")
