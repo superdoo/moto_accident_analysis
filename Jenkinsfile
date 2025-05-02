@@ -17,15 +17,15 @@ pipeline {
         }
 
         stage('Set Up Python Environment') {
-            steps {
-                sh '''
-                    python3 -m venv venv
-                    . venv/bin/activate
-                    pip install --upgrade pip
-                    pip install -r requirements.txt
-                '''
+    steps {
+        sh '''
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+        '''
             }
         }
+
 
         stage('Run Helmet & Speeding Analysis') {
             steps {
