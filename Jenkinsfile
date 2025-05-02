@@ -34,6 +34,16 @@ pipeline {
             }
         }
 
+        stage('Death Analysis') {
+            steps {
+                sh '''#!/bin/bash
+                source venv/bin/activate
+                python3 deahth_analysis.py
+                '''
+            }
+        }
+
+
         stage('SonarQube Analysis') {
             steps {
                 script {
