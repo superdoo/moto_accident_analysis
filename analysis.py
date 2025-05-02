@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 # Read the dataset
 df = pd.read_csv("accidents.csv")
 
+# Check the columns to make sure 'Person Helmet' exists
+print("DataFrame columns:", df.columns)
+
 # Filter for helmet-related records where helmet was not worn (code 1)
 helmet_df = df[df['Person Helmet'].str.startswith('1')]
 
@@ -18,7 +21,3 @@ plt.figure(figsize=(6, 4))
 plt.bar(['Helmet Not Worn'], [len(helmet_df)])
 plt.title('Motorcycle Accidents: Helmet Not Worn')
 plt.savefig("accident_analysis.png")
-
-
-if __name__ == "__main__":
-    analyze_data()
