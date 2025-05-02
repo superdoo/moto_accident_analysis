@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# List of motorcycle makes to include (already in uppercase)
+# List of motorcycle makes to include
 motorcycle_makes = [
     "HARLEY-DAVIDSON", "HONDA", "YAMAHA", "SUZUKI", "KAWASAKI", "DUCATI",
     "BMW", "KTM", "TRIUMPH", "APRILIA", "MOTO GUZZI", "ROYAL ENFIELD",
@@ -12,20 +12,18 @@ motorcycle_makes = [
 # Read the dataset
 df = pd.read_csv("accidents.csv")
 
-# Normalize column names to lowercase and strip spaces
-# df.columns = df.columns.str.strip().str.lower()
+# Optional: Print column names for debugging
+print("Available columns:", df.columns.tolist())
 
-# Debugging: print unique values in 'Vehicle Make' column
-print("Unique Vehicle Makes in CSV:")
-print(df['Vehicle Make'].unique())  # Assuming 'Vehicle Make' is the correct column name after lowercase normalization
-
-# Ensure 'Vehicle Make' column values are properly stripped of spaces (no need for uppercase conversion)
+# Normalize make column values (if it exists)
 if 'Vehicle Make' in df.columns:
-    df['Vehicle Make'] = df['Vehicle Make'].astype(str).str.strip()  # Strip spaces
+    df['Vehicle Make'] = df['Vehicle Make'].astype(str).str.strip().str.upper()
 
-    # Filter for valid motorcycle makes in 'Vehicle Make' column
+# Filter for fatal crashes (Crash Death Count >= 1) and valid motorcycle makes
+if 'Crash Death Count' in df.columns and 'Vehicle Make' in df.columns:
     fatal_motorcycles_df = df[
-        df['Vehicle Make'].isin(motorcycle_makes)  # Direct comparison since both are already uppercase
+        (df['Crash Death Count'] >= 1) &
+        df['Vehicle Make'].isin(motorcycle_makes)
     ]
 
     # Export filtered data
@@ -37,6 +35,5 @@ if 'Vehicle Make' in df.columns:
     plt.title('Fatal Motorcycle Crashes by Selected Makes')
     plt.savefig("death_analysis.png")
     plt.show()
-
 else:
-    print("Required 'Vehicle Make' column not found.")
+    print("Required columns ('Crash Death Count' and/or 'Vehicle Make') not found.")
