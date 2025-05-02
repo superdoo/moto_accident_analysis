@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 def analyze_data():
-    df = pd.read_csv("https://data.texas.gov/api/views/4tka-23y2/rows.csv?accessType=DOWNLOAD")
+    df = pd.read_csv("accidents.csv")
     helmet_df = df[df['Contributing Factor 1 Description'].str.contains('helmet', case=False, na=False)]
     speeding_df = df[df['Contributing Factor 1 Description'].str.contains('speed', case=False, na=False)]
 
